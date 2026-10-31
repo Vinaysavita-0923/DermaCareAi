@@ -1,0 +1,35 @@
+# Environments
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Secrets — never commit a real .env
+.env
+.env.*
+!.env.example
+
+# Local databases (Phase 2+)
+*.db
+*.sqlite3
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Uploaded user images / model checkpoints (Phase 6+)
+uploads/
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

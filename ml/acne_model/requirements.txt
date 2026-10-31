@@ -1,0 +1,15 @@
+# Training-package dependencies (separate from the backend).
+# Install these only on the machine/Colab where you TRAIN — the backend
+# does not need torch until a verified checkpoint is integrated.
+#
+# For a CPU-only local install, PyTorch recommends their index:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# On Colab, torch + torchvision are already installed.
+
+torch
+torchvision
+numpy
+scikit-learn
+matplotlib
+PyYAML
+Pillow

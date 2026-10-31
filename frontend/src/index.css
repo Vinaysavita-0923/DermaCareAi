@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* DermaCare AI theme, sampled from the logo.
+   The app uses Tailwind's `emerald-*` classes for its brand colour, so
+   redefining that scale here re-themes every page at once: leaf/sage
+   greens from the logo mark, with the deep forest green of the wordmark
+   at the dark end. `slate-50` becomes the logo's warm cream. */
+@theme {
+  --color-emerald-50: #f2f7ee;
+  --color-emerald-100: #e2eedb;
+  --color-emerald-200: #c6dcba;
+  --color-emerald-300: #a0c491;
+  --color-emerald-400: #78a869;
+  --color-emerald-500: #5a9150;
+  --color-emerald-600: #3f7a45;
+  --color-emerald-700: #2f6139;
+  --color-emerald-800: #264f30;
+  --color-emerald-900: #1d3f27;
+
+  --color-slate-50: #faf7f0;
+
+  /* Type: flared, calligraphic display face for headings (Marcellus) over a
+     humanist, calligraphy-derived text face (Alegreya Sans). */
+  --font-sans: "Alegreya Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Marcellus", Georgia, serif;
+  --font-display: "Marcellus", Georgia, serif;
+}
+
+/* Marcellus ships one weight; stop browsers faking a smeared bold. */
+h1, h2, h3, h4, .font-display, .splash-title {
+  font-family: var(--font-display);
+  font-synthesis: none;
+  letter-spacing: 0.01em;
+}
+/* Alegreya Sans runs small for its size; scale the whole rem system up ~6%. */
+html { font-size: 106.25%; }
+
+/* ------------------------------------------------------------------
+   Motion. Entrance effects use `animation-fill-mode: both`, so the
+   hidden start state only exists while the animation runs: with motion
+   turned off (see the reduced-motion block) everything is simply visible.
+   ------------------------------------------------------------------ */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes ring-out {
+  from { opacity: 0.55; transform: scale(0.7); }
+  to   { opacity: 0;    transform: scale(2.1); }
+}
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes splash-leave {
+  to { opacity: 0; visibility: hidden; transform: scale(1.04); }
+}
+
+.anim-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0s); }
+.anim-fade-in { animation: fade-in 0.8s ease-out both; animation-delay: var(--d, 0s); }
+.anim-pop-in  { animation: pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: var(--d, 0s); }
+.anim-float   { animation: float-y 5s ease-in-out infinite; animation-delay: 1s; }
+/* No fill-mode: once this finishes, the wrapper must return to having no
+   `transform` at all. A lingering `transform: translateY(0)` from
+   `fill-mode: both` would otherwise make this div a containing block for
+   any `position: fixed` descendant (e.g. a modal), positioning it
+   relative to this wrapper instead of the viewport. */
+.page-enter   { animation: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* Welcome screen shown once when the site opens. */
+.splash {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem;
+  background: radial-gradient(circle at 50% 42%, #eef5e8 0%, #faf7f0 62%);
+  animation: splash-leave 0.6s ease-in 2.3s forwards;
+}
+.splash-logo-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+.splash-logo { width: 11rem; height: 11rem; animation: pop-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.splash-ring {
+  position: absolute; width: 11rem; height: 11rem; border-radius: 9999px;
+  border: 2px solid #78a869; opacity: 0;
+  animation: ring-out 1.8s ease-out infinite;
+}
+.splash-ring.r2 { animation-delay: 0.6s; }
+.splash-ring.r3 { animation-delay: 1.2s; }
+.splash-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.01em; color: #1d3f27; animation: fade-up 0.7s ease-out 0.5s both; }
+.splash-title span { color: #5a9150; }
+.splash-tag { font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; color: #5a6b5c; animation: fade-up 0.7s ease-out 0.7s both; }
+.splash-bar { width: 9rem; height: 3px; border-radius: 9999px; background: #c6dcba; overflow: hidden; animation: fade-in 0.4s ease-out 0.6s both; }
+.splash-bar > i { display: block; height: 100%; background: #3f7a45; transform-origin: left; animation: bar-fill 1.6s ease-in-out 0.6s both; }
+
+/* Onboarding tour: the sidebar link for the current step. */
+@keyframes tour-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(63, 122, 69, 0.45); }
+  50%      { box-shadow: 0 0 0 6px rgba(63, 122, 69, 0); }
+}
+.tour-highlight { outline: 2px solid #3f7a45; outline-offset: 2px; animation: tour-pulse 1.6s ease-in-out infinite; }
+
+/* Kashvi chat: blinking cursor while a reply types out. */
+@keyframes cursor-blink { 50% { opacity: 0; } }
+.type-cursor {
+  display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: text-bottom;
+  background: #3f7a45; animation: cursor-blink 0.9s step-end infinite;
+}
+
+/* Kashvi chat: "typing…" dots. */
+@keyframes typing-dot {
+  0%, 80%, 100% { opacity: 0.3; transform: translateY(0); }
+  40%           { opacity: 1;   transform: translateY(-3px); }
+}
+.typing-dot { animation: typing-dot 1.2s ease-in-out infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up, .anim-fade-in, .anim-pop-in, .anim-float, .page-enter, .typing-dot, .tour-highlight { animation: none; }
+}
+
+/* Theme-green glow on any card-like block while the pointer is over it.
+   Add .no-glow to a large container (chat panel, modal shell) to opt out. */
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-xl"]:not(.no-glow),
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-2xl"]:not(.no-glow),
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-lg"]:not(.no-glow) {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-xl"]:not(.no-glow):hover,
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-2xl"]:not(.no-glow):hover,
+:is(div, section, article, li, a, details)[class*="border"][class*="rounded-lg"]:not(.no-glow):hover {
+  border-color: #5a9150;
+  box-shadow: 0 0 0 1px #5a9150, 0 0 16px 2px rgba(90, 145, 80, 0.35);
+}

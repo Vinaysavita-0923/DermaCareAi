@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "Curated, educational skin-care FAQs used for simple keyword retrieval by the mock provider and to ground real-LLM answers later. Each entry carries a source and review status. This is general educational content, not medical advice, and is intentionally small and conservative.",
+    "review_status": "draft - needs review by a qualified reviewer before any production use",
+    "last_updated": "2026-10-27"
+  },
+  "entries": [
+    {
+      "id": "cleansing_basics",
+      "keywords": ["cleanse", "cleansing", "wash face", "face wash", "cleanser"],
+      "question": "How often should I wash my face?",
+      "answer": "For most people, gently cleansing twice a day (morning and night) and after heavy sweating is a reasonable general routine. Over-washing or scrubbing hard can irritate the skin. A gentle, fragrance-free cleanser suits most skin types.",
+      "source": "General dermatology patient-education guidance (American Academy of Dermatology)",
+      "review_status": "draft"
+    },
+    {
+      "id": "niacinamide",
+      "keywords": ["niacinamide", "vitamin b3"],
+      "question": "What is niacinamide?",
+      "answer": "Niacinamide is a form of vitamin B3 used in many skin-care products. It is generally well tolerated and is commonly included to support the skin barrier and help with the look of uneven tone. Introduce any new active gradually and stop if irritation occurs.",
+      "source": "General cosmetic-ingredient education",
+      "review_status": "draft"
+    },
+    {
+      "id": "sunscreen",
+      "keywords": ["sunscreen", "spf", "sun protection", "uv"],
+      "question": "Do I need sunscreen every day?",
+      "answer": "Daily broad-spectrum sunscreen (commonly SPF 30 or higher) is widely recommended as part of general skin care, reapplied when outdoors for long periods. Sun protection also includes shade and clothing.",
+      "source": "General dermatology patient-education guidance (American Academy of Dermatology)",
+      "review_status": "draft"
+    },
+    {
+      "id": "acne_general",
+      "keywords": ["acne", "pimple", "pimples", "breakout", "breakouts", "spots"],
+      "question": "What helps with mild acne?",
+      "answer": "Mild acne is common. General measures include gentle cleansing, not picking or squeezing, and non-comedogenic (non-pore-clogging) products. Several over-the-counter ingredients are commonly used for mild acne. Persistent, painful, or scarring acne is worth discussing with a doctor or dermatologist, who can advise on options suited to you.",
+      "source": "General dermatology patient-education guidance",
+      "review_status": "draft"
+    },
+    {
+      "id": "dry_skin",
+      "keywords": ["dry skin", "dryness", "flaky", "moisturizer", "moisturiser", "hydration"],
+      "question": "How do I manage dry skin?",
+      "answer": "For dry skin, a gentle cleanser and a moisturizer applied while the skin is still slightly damp can help. Fragrance-free products and avoiding very hot water are often suggested. Persistent, cracking, or itchy dry skin may need a doctor's input.",
+      "source": "General dermatology patient-education guidance",
+      "review_status": "draft"
+    },
+    {
+      "id": "patch_test",
+      "keywords": ["patch test", "allergy test", "new product", "reaction"],
+      "question": "Should I patch test new products?",
+      "answer": "Patch testing a new product (applying a small amount to a small area for a few days before wider use) is a commonly suggested way to check for obvious irritation. Stop using any product that causes a reaction, and seek medical care for a severe or spreading reaction.",
+      "source": "General cosmetic-safety education",
+      "review_status": "draft"
+    }
+  ]
+}

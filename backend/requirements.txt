@@ -1,0 +1,17 @@
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.1
+pydantic-settings==2.16.1
+httpx==0.28.1
+pytest==9.1.1
+sqlalchemy==2.1.6
+alembic==1.20.1
+pwdlib[argon2]==0.3.1
+PyJWT==2.7.0
+email-validator==2.3.0
+python-multipart==0.0.32
+pillow>=10.0
+# Cloud LLM providers (LLM_PROVIDER=gemini / groq) — optional, free-tier.
+# Not required for LLM_PROVIDER=mock or =ollama.
+google-genai>=1.0
+groq>=0.11
