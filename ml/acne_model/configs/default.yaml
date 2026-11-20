@@ -1,0 +1,78 @@
+# ACNE04 acne-severity training configuration.
+#
+# IMPORTANT: the dataset-structure values below are DOCUMENTED DEFAULTS
+# based on the commonly published ACNE04 layout, NOT verified by this
+# code author against your copy. The loader (src/dataset.py) inspects
+# your actual dataset first and prints what it finds, and will stop with
+# a clear message if reality doesn't match these settings — so nothing
+# is silently assumed. Adjust these values to match the inspection
+# report, then re-run.
+
+dataset:
+  # Root folder of the extracted ACNE04 dataset on your machine / Colab.
+  root: "data/ACNE04"
+
+  # How labels are provided. Two supported modes:
+  #   "imagefolder"  -> images are in per-class subfolders:
+  #                     root/<class_name>/*.jpg
+  #   "annotation"   -> a CSV/txt file maps filename -> label
+  # ACNE04 is most commonly distributed with a filename->grade annotation
+  # file, so "annotation" is the default. Confirm against the inspection
+  # report before trusting it.
+  label_mode: "annotation"
+
+  # Used only when label_mode == "annotation".
+  # The loader auto-detects common ACNE04 annotation files; set this
+  # explicitly if yours differs. Expected: each line "<filename> <label>"
+  # or a CSV with columns [filename,label] (+ optional [severity]).
+  annotation_file: ""          # "" = auto-detect
+  images_subdir: ""            # "" = auto-detect (e.g. "JPEGImages" or "images")
+
+  # ACNE04 grades acne SEVERITY on the Hayashi criterion into 4 levels.
+  # These names are the documented default; the loader reports the actual
+  # distinct labels it finds and FAILS if the count differs from
+  # num_classes rather than guessing.
+  class_names: ["mild", "moderate", "severe", "very_severe"]
+
+  # Source/patient-level splitting: ACNE04 does not ship explicit patient
+  # ids in most distributions. If a patient/source id column or filename
+  # prefix IS available, set this to use it and avoid leakage. If left
+  # empty, the loader falls back to a stratified image-level split AND
+  # prints a clear warning that leakage cannot be fully ruled out.
+  group_id_regex: ""           # e.g. "^(patient_\\d+)_" to group by prefix
+
+model:
+  # "efficientnet_b0" or "resnet18" — both are lightweight enough for an
+  # MX350 (2 GB VRAM) at 224px with a small batch size, and both run on
+  # CPU (slower). resnet18 is the lighter default.
+  arch: "resnet18"
+  num_classes: 4
+  pretrained: true             # ImageNet transfer learning
+
+preprocessing:
+  image_size: 224
+  # ImageNet normalization (matches the pretrained backbones).
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+training:
+  epochs: 20
+  batch_size: 16               # fits 2 GB VRAM at 224px; lower to 8 if OOM
+  lr: 0.0003
+  weight_decay: 0.0001
+  num_workers: 2
+  seed: 42
+  # Handle class imbalance by weighting the loss by inverse class
+  # frequency (computed from the TRAIN split only). Set false to disable.
+  use_class_weights: true
+  # Early stopping on validation macro-F1.
+  early_stopping_patience: 5
+
+split:
+  # Fractions must sum to 1.0. Test is held out and never used for
+  # training or model selection.
+  train: 0.7
+  val: 0.15
+  test: 0.15
+
+output_dir: "outputs"

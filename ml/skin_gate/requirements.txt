@@ -1,0 +1,15 @@
+# Training-package dependencies (separate from the backend).
+# Needed only to RE-TRAIN the gate — the backend runs the exported
+# skin_gate.onnx with onnxruntime + numpy and needs none of these.
+#
+# For a CPU-only local install, PyTorch recommends their index:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+torch
+torchvision
+numpy
+scikit-learn
+pyarrow
+onnx
+onnxruntime
+Pillow

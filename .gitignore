@@ -1,0 +1,19 @@
+# secrets and local state
+.env
+*.db
+# dependencies and build output
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+dist/
+.pytest_cache/
+# skin-gate training data + intermediate models (re-created by the scripts)
+ml/skin_gate/data/
+ml/skin_gate/features.npz
+ml/skin_gate/skin_gate_*.onnx
+ml/skin_gate/report_*.txt
+
+# runtime logs
+backend/backend_log.txt
+frontend/frontend_log.txt
